@@ -1,0 +1,62 @@
+{
+	"$schema": "https://biomejs.dev/schemas/latest/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": ["**", "!!**/addons/dashboard/web/public"]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedVariables": "warn",
+				"noUndeclaredVariables": "error",
+				"noConstAssign": "error",
+				"noUnreachable": "error"
+			},
+			"suspicious": {
+				"noDoubleEquals": "error",
+				"noAsyncPromiseExecutor": "error",
+				"noVar": "error",
+				"useAwait": "warn",
+				"noArrayIndexKey": "off",
+				"noExplicitAny": "off"
+			},
+			"style": {
+				"useConst": "warn",
+				"useTemplate": "warn",
+				"noYodaExpression": "warn"
+			},
+			"complexity": {
+				"noThisInStatic": "off",
+				"useArrowFunction": "warn",
+				"noImportantStyles": "off"
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
+			}
+		}
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "off"
+			}
+		}
+	}
+}

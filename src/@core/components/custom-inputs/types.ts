@@ -1,0 +1,59 @@
+// React Imports
+import type { ChangeEvent, ReactNode } from 'react';
+
+// MUI Imports
+import type { Grid2Props } from '@mui/material/Grid2';
+
+// Type Imports
+import type { ThemeColor } from '@core/types';
+
+// Types of Vertical Custom Inputs
+export type CustomInputVerticalData = {
+	value: string;
+	title?: ReactNode;
+	content?: ReactNode;
+	isSelected?: boolean;
+	asset?: ReactNode;
+};
+export type CustomInputVerticalProps = {
+	name: string;
+	color?: ThemeColor;
+	gridProps?: Grid2Props;
+	data: CustomInputVerticalData;
+} & (
+	| {
+			type: 'checkbox';
+			selected: string[];
+			handleChange: (value: string) => void;
+	  }
+	| {
+			type: 'radio';
+			selected: string;
+			handleChange: (value: string | ChangeEvent<HTMLInputElement>) => void;
+	  }
+);
+
+// Types of Custom Inputs with Images
+export type CustomInputImgData = {
+	alt?: string;
+	value: string;
+	img: ReactNode;
+	isSelected?: boolean;
+};
+export type CustomInputImgProps = {
+	name: string;
+	color?: ThemeColor;
+	gridProps: Grid2Props;
+	data: CustomInputImgData;
+} & (
+	| {
+			type: 'checkbox';
+			selected: string[];
+			handleChange: (value: string) => void;
+	  }
+	| {
+			type: 'radio';
+			selected: string;
+			handleChange: (value: string | ChangeEvent<HTMLInputElement>) => void;
+	  }
+);
