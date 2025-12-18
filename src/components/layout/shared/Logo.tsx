@@ -11,7 +11,7 @@ import styled from '@emotion/styled';
 import type { VerticalNavContextProps } from '@menu/contexts/verticalNavContext';
 
 // Component Imports
-import VuexyLogo from '@core/svg/Logo';
+import KythiaLogo from '@core/svg/Logo';
 
 // Config Imports
 import themeConfig from '@configs/themeConfig';
@@ -60,7 +60,7 @@ const Logo = ({ color }: { color?: CSSProperties['color'] }) => {
 			return;
 		}
 
-		if (logoTextRef && logoTextRef.current) {
+		if (logoTextRef?.current) {
 			if (!isBreakpointReached && layout === 'collapsed' && !isHovered) {
 				logoTextRef.current?.classList.add('hidden');
 			} else {
@@ -72,7 +72,7 @@ const Logo = ({ color }: { color?: CSSProperties['color'] }) => {
 
 	return (
 		<div className="flex items-center">
-			<VuexyLogo />
+			<KythiaLogo />
 			<LogoText
 				color={color}
 				ref={logoTextRef}

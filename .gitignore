@@ -43,3 +43,5 @@ src/assets/iconify-icons/generated-icons.css
 .vscode/
 *.db
 *.sqlite
+
+kythia.config.ts

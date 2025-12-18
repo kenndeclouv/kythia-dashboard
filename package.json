@@ -61,6 +61,7 @@
 		"valibot": "^1.2.0"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^2.3.10",
 		"@iconify/json": "2.2.286",
 		"@iconify/tools": "4.1.1",
 		"@iconify/types": "2.0.0",

@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
-	const ownerId = process.env.NEXT_PUBLIC_OWNER_ID;
+	const ownerId = '1158654757183959091';
 	const userId = (session.user as any).id || (session.user as any).sub;
 
 	if (userId !== ownerId) {

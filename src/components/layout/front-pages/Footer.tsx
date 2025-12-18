@@ -27,13 +27,6 @@ import { frontLayoutClasses } from '@layouts/utils/layoutClasses';
 import frontCommonStyles from '@views/front-pages/styles.module.css';
 
 const Footer = ({ mode }: { mode: Mode }) => {
-	// Vars - Gunakan gambar background footer bawaan template
-	// const footerImageLight = '/images/front-pages/footer-bg-light.png'
-	// const footerImageDark = '/images/front-pages/footer-bg-dark.png'
-
-	// Hooks
-	// const dashboardImage = useImageVariant(mode, footerImageLight, footerImageDark)
-
 	return (
 		<footer className="w-full relative overflow-hidden bg-primaryLighter z-10 border">
 			<div>
@@ -64,11 +57,18 @@ const Footer = ({ mode }: { mode: Mode }) => {
 						</Grid>
 
 						{/* COLUMN 2: Pages */}
-						<Grid size={{ xs: 12, sm: 4, lg: 2 }}>
+						<Grid size={{ xs: 12, sm: 4, lg: 2 }} className="ms-auto">
 							<Typography className="font-medium mbe-6 opacity-[0.92]">
 								Resources
 							</Typography>
 							<div className="flex flex-col gap-4">
+								<Typography
+									component={Link}
+									href="/home"
+									className="opacity-[0.78] hover:text-primary transition-all"
+								>
+									Home
+								</Typography>
 								<Typography
 									component={Link}
 									href="/commands"
@@ -89,6 +89,13 @@ const Footer = ({ mode }: { mode: Mode }) => {
 									className="opacity-[0.78] hover:text-primary transition-all"
 								>
 									About Owner
+								</Typography>
+								<Typography
+									component={Link}
+									href="/status"
+									className="opacity-[0.78] hover:text-primary transition-all"
+								>
+									Status
 								</Typography>
 							</div>
 						</Grid>

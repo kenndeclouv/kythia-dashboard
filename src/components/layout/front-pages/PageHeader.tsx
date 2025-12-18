@@ -3,7 +3,7 @@
 import Image from 'next/image';
 
 import Typography from '@mui/material/Typography';
-
+import { kythiaConfig } from '@config';
 import classnames from 'classnames';
 
 type Props = {
@@ -13,9 +13,7 @@ type Props = {
 	className?: string;
 };
 
-const LOGO_URL =
-	process.env.NEXT_PUBLIC_LOGO_URL ||
-	'https://placehold.co/500x500.png?text=kythia+logo';
+const LOGO_URL = kythiaConfig.assets.logo;
 
 const PageHeader = ({ title, subtitle, logo = false, className }: Props) => {
 	return (

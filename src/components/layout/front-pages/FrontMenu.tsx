@@ -22,6 +22,7 @@ import type { Mode } from '@core/types';
 
 // Hook Imports
 import { useIntersection } from '@/hooks/useIntersection';
+import { kythiaConfig } from '@config';
 
 type Props = {
 	mode: Mode;
@@ -159,6 +160,15 @@ const FrontMenu = (props: Props) => {
 				)}
 			>
 				About
+			</Typography>
+			<Typography
+				color="text.primary"
+				component={Link}
+				target="_blank"
+				href={kythiaConfig.links.status}
+				className="font-medium plb-3 pli-1.5 hover:text-primary transition-all"
+			>
+				Status
 			</Typography>
 		</Wrapper>
 	);

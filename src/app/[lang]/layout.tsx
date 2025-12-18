@@ -27,13 +27,34 @@ import '@/app/globals.css';
 
 // Generated Icon CSS Imports
 import '@assets/iconify-icons/generated-icons.css';
+import { kythiaConfig } from '@config';
 
 export const metadata = {
-	title: 'Kythia - The Ultimate Multipurpose Discord Bot',
-	description:
-		'Manage your server with style. AI, Leveling, Automod, and more.',
+	title: `${kythiaConfig.general.appName} | ${kythiaConfig.general.appDescription}`,
+	description: kythiaConfig.general.appDescription,
+	keywords: kythiaConfig.general.keywords,
+	openGraph: {
+		title: kythiaConfig.general.appName,
+		description: kythiaConfig.general.appDescription,
+		type: 'website',
+		locale: 'en_US',
+		siteName: kythiaConfig.general.appName,
+		url: kythiaConfig.general.appUrl,
+		images: [
+			{
+				url: kythiaConfig.assets.ogImage,
+				width: 1200,
+				height: 630,
+				alt: kythiaConfig.general.appName,
+			},
+		],
+	},
+	icons: {
+		icon: kythiaConfig.assets.favicon,
+		shortcut: kythiaConfig.assets.favicon,
+		apple: kythiaConfig.assets.logo,
+	},
 };
-
 const RootLayout = async (props: ChildrenType & { params: Promise<any> }) => {
 	const params = await props.params;
 

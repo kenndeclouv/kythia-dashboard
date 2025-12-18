@@ -11,6 +11,7 @@ import useVerticalNav from '@menu/hooks/useVerticalNav';
 
 // Util Imports
 import { verticalLayoutClasses } from '@layouts/utils/layoutClasses';
+import { kythiaConfig } from '@config';
 
 const FooterContent = () => {
 	// Hooks
@@ -37,15 +38,11 @@ const FooterContent = () => {
 					<Link href="/privacy" target="_blank" className="hover:text-primary">
 						Privacy
 					</Link>
-					<Link
-						href="/terms-of-service"
-						target="_blank"
-						className="hover:text-primary"
-					>
+					<Link href="/tos" target="_blank" className="hover:text-primary">
 						ToS
 					</Link>
 					<Link
-						href="https://dsc.gg/kythia"
+						href={kythiaConfig.links.discordSupport}
 						target="_blank"
 						className="hover:text-primary"
 					>

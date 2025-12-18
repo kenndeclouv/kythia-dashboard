@@ -402,7 +402,11 @@ const LicenseDetailPage = () => {
 			const res = await fetch(`/api/v1/license/${id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ boundClientId: null }),
+				body: JSON.stringify({
+					boundClientId: null,
+					ipAddress: null,
+					hwid: null,
+				}),
 			});
 
 			if (res.ok) {

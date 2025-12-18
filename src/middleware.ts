@@ -9,7 +9,7 @@ export default withAuth(
 		const token = req.nextauth.token;
 		const userId = token?.sub || (token as any)?.id;
 
-		const ownerId = process.env.NEXT_PUBLIC_OWNER_ID;
+		const ownerId = '1158654757183959091';
 
 		if (path.includes('/dash/admin')) {
 			if (userId !== ownerId) {

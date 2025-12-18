@@ -17,7 +17,7 @@ export async function GET(
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 	const userId = (session.user as any).id || (session.user as any).sub;
 
-	if (userId !== process.env.NEXT_PUBLIC_OWNER_ID)
+	if (userId !== '1158654757183959091')
 		return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
 	const ip = req.headers.get('x-forwarded-for') || 'unknown';
@@ -61,7 +61,7 @@ export async function PATCH(
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 	const userId = (session.user as any).id || (session.user as any).sub;
 
-	if (userId !== process.env.NEXT_PUBLIC_OWNER_ID)
+	if (userId !== '1158654757183959091')
 		return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
 	const ip = req.headers.get('x-forwarded-for') || 'unknown';
@@ -73,11 +73,22 @@ export async function PATCH(
 	try {
 		const { id } = await params;
 		const body = await req.json();
-		const { isActive } = body;
+
+		// Extract all possible fields
+		const { isActive, boundClientId, ipAddress, hwid, config } = body;
+
+		// Build update data object dynamically
+		const updateData: any = {};
+
+		if (isActive !== undefined) updateData.isActive = isActive;
+		if (boundClientId !== undefined) updateData.boundClientId = boundClientId;
+		if (ipAddress !== undefined) updateData.ipAddress = ipAddress;
+		if (hwid !== undefined) updateData.hwid = hwid;
+		if (config !== undefined) updateData.config = config;
 
 		const license = await prisma.license.update({
 			where: { id },
-			data: { isActive },
+			data: updateData,
 		});
 
 		return NextResponse.json(license);
@@ -98,7 +109,7 @@ export async function DELETE(
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 	const userId = (session.user as any).id || (session.user as any).sub;
 
-	if (userId !== process.env.NEXT_PUBLIC_OWNER_ID)
+	if (userId !== '1158654757183959091')
 		return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
 	const ip = req.headers.get('x-forwarded-for') || 'unknown';

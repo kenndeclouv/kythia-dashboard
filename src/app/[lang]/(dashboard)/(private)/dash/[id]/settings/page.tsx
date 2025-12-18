@@ -30,7 +30,11 @@ type GuildDetail = {
 	roles: { id: string; name: string; color: string }[];
 };
 
-const ServerDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+const ServerDetailPage = async ({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}) => {
 	const { id } = await params;
 
 	// 1. Fetch Data Detail dari Bot

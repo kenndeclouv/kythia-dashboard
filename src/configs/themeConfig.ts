@@ -62,7 +62,7 @@ export type Config = {
 const themeConfig: Config = {
 	templateName: 'Kythia',
 	homePageUrl: '/',
-	settingsCookieName: 'vuexy-mui-next-demo-1',
+	settingsCookieName: 'kythia-dashboard',
 	mode: 'system', // 'system', 'light', 'dark'
 	skin: 'default', // 'default', 'bordered'
 	semiDark: false, // true, false

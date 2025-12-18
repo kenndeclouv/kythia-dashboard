@@ -4,6 +4,7 @@
 // import { Suspense } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
+import { kythiaConfig } from '@config';
 
 // Next Auth
 import { getServerSession } from 'next-auth';
@@ -35,9 +36,7 @@ const Icon = ({ name, className }: { name: string; className?: string }) => (
 	<i className={`tabler-${name} ${className}`} />
 );
 
-const logo: string =
-	process.env.NEXT_PUBLIC_LOGO_URL ||
-	'https://placehold.co/500x500.png?text=kythia+logo';
+const logo: string = kythiaConfig.assets.homePageHeroImage;
 
 export default async function LandingPage() {
 	// 1. Fetch Data Realtime
@@ -186,7 +185,7 @@ export default async function LandingPage() {
 							<Card className="glass border border-white/10 overflow-hidden">
 								<CardContent className="p-0">
 									<Image
-										src="/assets/img/front-pages/ai.png"
+										src={kythiaConfig.assets.homePageFeatureAi}
 										alt="AI"
 										width={800}
 										height={500}
@@ -204,7 +203,7 @@ export default async function LandingPage() {
 							<Card className="glass border border-white/10 overflow-hidden">
 								<CardContent className="p-0">
 									<Image
-										src="/assets/img/front-pages/music.png"
+										src={kythiaConfig.assets.homePageFeatureMusic}
 										alt="Music"
 										width={800}
 										height={500}
@@ -267,7 +266,7 @@ export default async function LandingPage() {
 							<Card className="glass border border-white/10 overflow-hidden">
 								<CardContent className="p-0">
 									<Image
-										src="/assets/img/front-pages/dashboard.png"
+										src={kythiaConfig.assets.homePageFeatureDashboard}
 										alt="Dashboard"
 										width={800}
 										height={500}
@@ -285,7 +284,7 @@ export default async function LandingPage() {
 							<Card className="glass border border-white/10 overflow-hidden">
 								<CardContent className="p-0">
 									<Image
-										src="/assets/img/front-pages/globalchat.png"
+										src={kythiaConfig.assets.homePageFeatureGlobalChat}
 										alt="Global Chat"
 										width={800}
 										height={500}

@@ -19,7 +19,7 @@ export async function GET(req: Request) {
 	}
 
 	// 2. 🛡️ CEK OWNER (Ini kamu bukan?)
-	const ownerId = process.env.NEXT_PUBLIC_OWNER_ID;
+	const ownerId = '1158654757183959091';
 
 	// Note: Pastikan session.user.id ada (tergantung config nextauth kamu, kadang sub/id)
 	const userId = (session.user as any).id || (session.user as any).sub;

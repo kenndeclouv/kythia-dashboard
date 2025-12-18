@@ -1,9 +1,12 @@
+// src/app/(landing)/layout.tsx
+
 // MUI Imports
 import Button from '@mui/material/Button';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 
 // Third-party Imports
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import { kythiaConfig } from '@config';
 
 // Type Imports
 import type { ChildrenType } from '@core/types';
@@ -27,22 +30,22 @@ import '@/app/globals.css';
 import '@assets/iconify-icons/generated-icons.css';
 
 export const metadata = {
-	title: 'Kythia | Your cutest discord companion',
-	description: 'Kythia | Your cutest discord companion',
-	keywords: ['Discord Bot', 'Leveling', 'Dashboard', 'AI', 'Automod'],
+	title: `${kythiaConfig.general.appName} | ${kythiaConfig.general.appDescription}`,
+	description: kythiaConfig.general.appDescription,
+	keywords: kythiaConfig.general.keywords,
 	openGraph: {
-		title: 'Kythia | Your cutest discord companion',
-		description: 'Kythia | Your cutest discord companion',
+		title: kythiaConfig.general.appName,
+		description: kythiaConfig.general.appDescription,
 		type: 'website',
 		locale: 'en_US',
-		siteName: 'Kythia',
-		url: 'https://kythia.me',
+		siteName: kythiaConfig.general.appName,
+		url: kythiaConfig.general.appUrl,
 		images: [
 			{
-				url: '/images/front-pages/landing-page/hero-bg.png',
+				url: kythiaConfig.assets.ogImage,
 				width: 1200,
 				height: 630,
-				alt: 'Kythia | Your cutest discord companion',
+				alt: kythiaConfig.general.appName,
 			},
 		],
 	},

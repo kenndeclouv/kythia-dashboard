@@ -5,7 +5,7 @@ const verticalMenuData = (
 	guildId: string | null,
 	userId: string | null,
 ): VerticalMenuDataType[] => {
-	const isOwner = userId === process.env.NEXT_PUBLIC_OWNER_ID;
+	const isOwner = userId === '1158654757183959091';
 
 	const menu: VerticalMenuDataType[] = [
 		{
