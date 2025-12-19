@@ -1,7 +1,9 @@
+import { kythiaConfig } from '@config';
+
 export type PrimaryColorConfig = {
 	name?: string;
 	light?: string;
-	main: string;
+	main?: string;
 	dark?: string;
 };
 
@@ -9,9 +11,9 @@ export type PrimaryColorConfig = {
 const primaryColorConfig: PrimaryColorConfig[] = [
 	{
 		name: 'primary-1',
-		light: '#F6B1CE',
-		main: '#F6B1CE',
-		dark: '#F6B1CE',
+		light: kythiaConfig.general.primaryColor,
+		main: kythiaConfig.general.primaryColor,
+		dark: kythiaConfig.general.primaryColor,
 	},
 	{
 		name: 'primary-2',

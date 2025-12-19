@@ -11,7 +11,7 @@ type FetchOptions = RequestInit & {
 
 export async function fetchAPI(endpoint: string, options: FetchOptions = {}) {
 	try {
-		const session = await getServerSession(authOptions);
+		const _session = await getServerSession(authOptions);
 
 		const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
 		const fullUrl = `${BOT_API_URL}${path}`;
@@ -22,7 +22,7 @@ export async function fetchAPI(endpoint: string, options: FetchOptions = {}) {
 		};
 
 		if (process.env.API_SECRET) {
-			headers['Authorization'] = `Bearer ${process.env.API_SECRET}`;
+			headers.Authorization = `Bearer ${process.env.API_SECRET}`;
 		}
 
 		const controller = new AbortController();

@@ -20,6 +20,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
+import DialogContentText from '@mui/material/DialogContentText';
+import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -42,6 +44,11 @@ const LicenseListPage = () => {
 	const [open, setOpen] = useState(false);
 	const [ownerId, setOwnerId] = useState('');
 	const [generating, setGenerating] = useState(false);
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+	const [selectedLicenseId, setSelectedLicenseId] = useState<string | null>(
+		null,
+	);
+	const [actionLoading, setActionLoading] = useState(false);
 
 	// Ambil lang dari params kalau butuh construct URL manual, tapi Link otomatis handle biasanya
 	const params = useParams();
@@ -90,6 +97,65 @@ const LicenseListPage = () => {
 			toast.error('Error generating license');
 		} finally {
 			setGenerating(false);
+		}
+	};
+
+	const handleToggleStatus = async (id: string, currentStatus: boolean) => {
+		try {
+			const res = await fetch(`/api/v1/license/${id}`, {
+				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ isActive: !currentStatus }),
+			});
+
+			if (res.ok) {
+				toast.success(`License ${!currentStatus ? 'activated' : 'suspended'}`);
+				fetchLicenses();
+			} else {
+				const data = await res.json();
+				toast.error(data.error || 'Failed to update status');
+			}
+		} catch (error) {
+			console.error(error);
+			toast.error('Error updating license status');
+		}
+	};
+
+	const handleDelete = (id: string) => {
+		setSelectedLicenseId(id);
+		setDeleteDialogOpen(true);
+	};
+
+	const handleDeleteCancel = () => {
+		if (!actionLoading) {
+			setDeleteDialogOpen(false);
+			setSelectedLicenseId(null);
+		}
+	};
+
+	const confirmDelete = async () => {
+		if (!selectedLicenseId) return;
+		setActionLoading(true);
+
+		try {
+			const res = await fetch(`/api/v1/license/${selectedLicenseId}`, {
+				method: 'DELETE',
+			});
+
+			if (res.ok) {
+				toast.success('License deleted');
+				fetchLicenses();
+				setDeleteDialogOpen(false);
+				setSelectedLicenseId(null);
+			} else {
+				const data = await res.json();
+				toast.error(data.error || 'Failed to delete license');
+			}
+		} catch (error) {
+			console.error(error);
+			toast.error('Error deleting license');
+		} finally {
+			setActionLoading(false);
 		}
 	};
 
@@ -171,12 +237,47 @@ const LicenseListPage = () => {
 											{new Date(license.lastUsed).toLocaleString()}
 										</TableCell>
 										<TableCell>
-											{/* INI NAVIGASI KE PAGE BARU */}
-											<Link href={`/${lang}/dash/admin/license/${license.id}`}>
-												<IconButton size="small" color="primary">
-													<i className="tabler-eye" />
-												</IconButton>
-											</Link>
+											<div className="flex items-center gap-2">
+												<Link
+													href={`/${lang}/dash/admin/license/${license.id}`}
+												>
+													<Button
+														variant="tonal"
+														size="small"
+														startIcon={<i className="tabler-eye" />}
+													>
+														View
+													</Button>
+												</Link>
+												<Button
+													variant="tonal"
+													size="small"
+													color={license.isActive ? 'warning' : 'success'}
+													onClick={() =>
+														handleToggleStatus(license.id, license.isActive)
+													}
+													startIcon={
+														<i
+															className={
+																license.isActive
+																	? 'tabler-player-pause'
+																	: 'tabler-player-play'
+															}
+														/>
+													}
+												>
+													{license.isActive ? 'Suspend' : 'Activate'}
+												</Button>
+												<Button
+													variant="tonal"
+													size="small"
+													color="error"
+													onClick={() => handleDelete(license.id)}
+													startIcon={<i className="tabler-trash" />}
+												>
+													Delete
+												</Button>
+											</div>
 										</TableCell>
 									</TableRow>
 								))
@@ -213,6 +314,53 @@ const LicenseListPage = () => {
 						disabled={generating}
 					>
 						{generating ? 'Generating...' : 'Generate'}
+					</Button>
+				</DialogActions>
+			</Dialog>
+			<Dialog
+				open={deleteDialogOpen}
+				onClose={handleDeleteCancel}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle
+					id="alert-dialog-title"
+					className="text-error flex items-center gap-2"
+				>
+					<i className="tabler-alert-triangle text-xl" />
+					Confirm Deletion
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+						Are you sure you want to permanently delete this license?
+						<br />
+						<strong>This action cannot be undone</strong> and the associated bot
+						will stop working immediately.
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions className="px-6 pb-4">
+					<Button
+						onClick={handleDeleteCancel}
+						color="secondary"
+						disabled={actionLoading}
+					>
+						Cancel
+					</Button>
+					<Button
+						onClick={confirmDelete}
+						color="error"
+						variant="contained"
+						autoFocus
+						disabled={actionLoading}
+						startIcon={
+							actionLoading ? (
+								<CircularProgress size={16} color="inherit" />
+							) : (
+								<i className="tabler-trash" />
+							)
+						}
+					>
+						{actionLoading ? 'Deleting...' : 'Yes, Delete It'}
 					</Button>
 				</DialogActions>
 			</Dialog>

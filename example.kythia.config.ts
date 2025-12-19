@@ -1,7 +1,3 @@
-// example.kythia.config.ts
-
-const ASSETS_BASE = process.env.NEXT_PUBLIC_ASSETS_URL || '';
-
 export interface IKythiaConfig {
 	general: {
 		appName: string;
@@ -9,6 +5,7 @@ export interface IKythiaConfig {
 		appUrl: string;
 		author: string;
 		keywords: string[];
+		primaryColor?: string;
 	};
 	assets: {
 		logo: string;
@@ -41,6 +38,7 @@ export const kythiaConfig: IKythiaConfig = {
 		appUrl: 'https://kythia.me',
 		author: 'kenndeclouv',
 		keywords: ['Discord Bot', 'Dashboard', 'AI'],
+		primaryColor: '#F6B1CE',
 	},
 
 	// --- ASSETS ---
@@ -55,7 +53,7 @@ export const kythiaConfig: IKythiaConfig = {
 		banner: `https://placehold.co/800x400.png?text=kythia+banner`,
 		ogImage: `https://placehold.co/1200x630.png?text=kythia+ogimage`,
 		defaultAvatar: `https://placehold.co/128x128.png?text=kythia`,
-		favicon: `${ASSETS_BASE}/favicon.ico`,
+		favicon: `https://placehold.co/128x128.png?text=kythia`,
 	},
 
 	// --- LINKS ---

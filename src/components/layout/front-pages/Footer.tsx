@@ -25,6 +25,7 @@ import { frontLayoutClasses } from '@layouts/utils/layoutClasses';
 // Styles Imports
 // import styles from './styles.module.css'
 import frontCommonStyles from '@views/front-pages/styles.module.css';
+import { kythiaConfig } from '@config';
 
 const Footer = ({ mode }: { mode: Mode }) => {
 	return (
@@ -64,7 +65,7 @@ const Footer = ({ mode }: { mode: Mode }) => {
 							<div className="flex flex-col gap-4">
 								<Typography
 									component={Link}
-									href="/home"
+									href="/"
 									className="opacity-[0.78] hover:text-primary transition-all"
 								>
 									Home
@@ -133,7 +134,7 @@ const Footer = ({ mode }: { mode: Mode }) => {
 						fontWeight: 800,
 						lineHeight: 0.7,
 
-						color: '#F6B1CE',
+						color: kythiaConfig.general.primaryColor,
 
 						width: '100%',
 						userSelect: 'none',

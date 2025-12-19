@@ -79,3 +79,11 @@ model TelemetryLog {
   createdAt DateTime @default(now())
   license   License  @relation(fields: [licenseId], references: [id], onDelete: Cascade)
 }
+
+model Visitor {
+  id        String   @id @default(cuid())
+  ip        String   @unique
+  visits    Int      @default(1)
+  lastVisit DateTime @default(now())
+  createdAt DateTime @default(now())
+}

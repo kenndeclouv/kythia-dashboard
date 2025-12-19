@@ -1,27 +1,20 @@
 'use client';
 
-// React Imports
 import { useEffect } from 'react';
 
-// Next Imports
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
-// MUI Imports
 import Typography from '@mui/material/Typography';
 import Drawer from '@mui/material/Drawer';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import type { Theme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 
-// Third-party Imports
 import classnames from 'classnames';
 
-// Type Imports
 import type { Mode } from '@core/types';
 
-// Hook Imports
-import { useIntersection } from '@/hooks/useIntersection';
 import { kythiaConfig } from '@config';
 
 type Props = {
@@ -39,7 +32,6 @@ type WrapperProps = {
 };
 
 const Wrapper = (props: WrapperProps) => {
-	// Props
 	const {
 		children,
 		isBelowLgScreen,
@@ -87,15 +79,12 @@ const Wrapper = (props: WrapperProps) => {
 };
 
 const FrontMenu = (props: Props) => {
-	// Props
-	const { isDrawerOpen, setIsDrawerOpen, mode } = props;
+	const { isDrawerOpen, setIsDrawerOpen } = props;
 
-	// Hooks
 	const pathname = usePathname();
 	const isBelowLgScreen = useMediaQuery((theme: Theme) =>
 		theme.breakpoints.down('lg'),
 	);
-	const { intersections } = useIntersection();
 
 	useEffect(() => {
 		if (!isBelowLgScreen && isDrawerOpen) {
@@ -134,19 +123,6 @@ const FrontMenu = (props: Props) => {
 				)}
 			>
 				Commands
-			</Typography>
-			<Typography
-				color="text.primary"
-				component={Link}
-				href="/changelog"
-				className={classnames(
-					'font-medium plb-3 pli-1.5 hover:text-primary transition-all',
-					{
-						'text-primary': pathname === '/changelog',
-					},
-				)}
-			>
-				Changelog
 			</Typography>
 			<Typography
 				color="text.primary"

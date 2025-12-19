@@ -3,15 +3,16 @@ import type { Theme } from '@mui/material/styles';
 
 // Type Imports
 import type { Skin } from '@core/types';
+import { kythiaConfig } from '@config';
 
 const colorSchemes = (skin: Skin): Theme['colorSchemes'] => {
 	return {
 		light: {
 			palette: {
 				primary: {
-					main: '#F6B1CE',
-					light: '#F6B1CE',
-					dark: '#F6B1CE',
+					main: kythiaConfig.general.primaryColor,
+					light: kythiaConfig.general.primaryColor,
+					dark: kythiaConfig.general.primaryColor,
 					contrastText: '#FFF',
 					lighterOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.08)',
 					lightOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.16)',
@@ -163,9 +164,9 @@ const colorSchemes = (skin: Skin): Theme['colorSchemes'] => {
 		dark: {
 			palette: {
 				primary: {
-					main: '#F6B1CE',
-					light: '#F6B1CE',
-					dark: '#F6B1CE',
+					main: kythiaConfig.general.primaryColor,
+					light: kythiaConfig.general.primaryColor,
+					dark: kythiaConfig.general.primaryColor,
 					lighterOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.08)',
 					lightOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.16)',
 					mainOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.24)',
