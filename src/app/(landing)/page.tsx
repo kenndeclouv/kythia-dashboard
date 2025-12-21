@@ -41,6 +41,7 @@ const logo: string = kythiaConfig.assets.homePageHeroImage;
 
 // Client Component for Marquee
 import TrustedByMarquee from '@/components/landing/TrustedByMarquee';
+import DraggableFeatureGrid from '@/components/landing/DraggableFeatureGrid';
 
 export default async function LandingPage() {
 	// 1. Fetch Data Realtime
@@ -381,23 +382,7 @@ export default async function LandingPage() {
 						</p>
 					</div>
 
-					<Grid container spacing={4}>
-						{features.map((f, i) => (
-							<Grid item xs={12} md={4} key={i}>
-								<Card className="h-full group border bg-white/[0.02] glass">
-									<CardContent className="p-6 text-center">
-										<div
-											className={`bg-primaryLight w-16 h-16 mx-auto mb-4 rounded-xl flex items-center justify-center text-2xl bg-${f.color}/10 text-${f.color}`}
-										>
-											<Icon name={f.icon} className="text-4xl" />
-										</div>
-										<h3 className="text-lg font-bold mb-2">{f.title}</h3>
-										<p className="text-sm ">{f.desc}</p>
-									</CardContent>
-								</Card>
-							</Grid>
-						))}
-					</Grid>
+					<DraggableFeatureGrid initialFeatures={features} />
 				</div>
 			</section>
 
@@ -444,6 +429,12 @@ const features = [
 		desc: 'High quality music playback.',
 		icon: 'music',
 		color: 'success',
+	},
+		{
+		title: 'Moderation',
+		desc: 'Advanced mod tools.',
+		icon: 'gavel',
+		color: 'secondary',
 	},
 	{
 		title: 'Auto Mod',
@@ -500,4 +491,17 @@ const features = [
 		icon: 'file-text',
 		color: 'secondary',
 	},
+	{
+		title: 'Welcome',
+		desc: 'Custom welcome messages.',
+		icon: 'door-enter',
+		color: 'primary',
+	},
+	{
+		title: 'Reaction Roles',
+		desc: 'Self-assignable roles.',
+		icon: 'fingerprint',
+		color: 'error',
+	},
+
 ];
