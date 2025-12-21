@@ -136,12 +136,15 @@ const StreakForm = ({ guildId, initialSettings, roles }: Props) => {
 										Auto Change Nickname
 									</Typography>
 									<Typography variant="caption">
-										Automaticly change member nickname to streak count example: `kenn 🔥3`
+										Automaticly change member nickname to streak count example:
+										`kenn 🔥3`
 									</Typography>
 								</div>
 								<Switch
 									checked={formData.streakNickname || false}
-									onChange={(e) => updateState('streakNickname', e.target.checked)}
+									onChange={(e) =>
+										updateState('streakNickname', e.target.checked)
+									}
 								/>
 							</div>
 						</CardContent>

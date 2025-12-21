@@ -38,7 +38,9 @@ const TrustedByMarquee = ({ guilds }: TrustedByMarqueeProps) => {
 							</div>
 						)}
 						<div className="flex flex-col">
-							<span className="font-bold text-lg">{guild.name.slice(0, 16)}</span>
+							<span className="font-bold text-lg">
+								{guild.name.slice(0, 16)}
+							</span>
 							<span className="text-sm text-gray-400">
 								<span className="text-primary">
 									{guild.memberCount.toLocaleString()}

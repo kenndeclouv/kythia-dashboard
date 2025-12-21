@@ -236,13 +236,14 @@ export default async function LandingPage() {
 					</Grid>
 					<Grid item xs={12} lg={6} className="order-1 lg:order-2">
 						<Card className="glass border border-white/10 overflow-hidden">
-							<CardContent className="p-0">
+							<CardContent className="p-0 m-0">
 								<Image
 									src={kythiaConfig.assets.homePageFeatureAi}
 									alt="AI"
 									width={800}
 									height={500}
-									className="w-full object-cover"
+									objectFit="cover"
+									className="w-full h-full object-cover"
 									unoptimized
 								/>
 							</CardContent>
@@ -260,7 +261,8 @@ export default async function LandingPage() {
 									alt="Music"
 									width={800}
 									height={500}
-									className="w-full object-cover"
+									objectFit="cover"
+									className="w-full h-full object-cover"
 									unoptimized
 								/>
 							</CardContent>
@@ -321,7 +323,8 @@ export default async function LandingPage() {
 									alt="Dashboard"
 									width={800}
 									height={500}
-									className="w-full object-cover"
+									objectFit="cover"
+									className="w-full h-full object-cover"
 									unoptimized
 								/>
 							</CardContent>
@@ -339,7 +342,8 @@ export default async function LandingPage() {
 									alt="Global Chat"
 									width={800}
 									height={500}
-									className="w-full object-cover"
+									objectFit="cover"
+									className="w-full h-full object-cover"
 									unoptimized
 								/>
 							</CardContent>
