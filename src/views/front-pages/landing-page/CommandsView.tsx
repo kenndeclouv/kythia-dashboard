@@ -169,7 +169,7 @@ const CommandsView = ({ commands, categories, totalCommands }: Props) => {
 										<Chip
 											label={count}
 											size="small"
-											className="bg-actionSelected"
+											// className="text-light"
 										/>
 									</Button>
 								);

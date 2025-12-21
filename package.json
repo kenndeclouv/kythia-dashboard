@@ -40,6 +40,8 @@
 		"cmdk": "1.0.4",
 		"date-fns": "4.1.0",
 		"dotenv-cli": "^11.0.0",
+		"embla-carousel-auto-scroll": "^8.6.0",
+		"embla-carousel-react": "^8.6.0",
 		"fs-extra": "11.2.0",
 		"input-otp": "1.4.1",
 		"negotiator": "1.0.0",
