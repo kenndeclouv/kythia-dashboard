@@ -14,6 +14,9 @@ import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import TablePagination from '@mui/material/TablePagination';
 import Alert from '@mui/material/Alert';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -344,6 +347,9 @@ const LicenseDetailPage = () => {
 	const [metadataDialogOpen, setMetadataDialogOpen] = useState(false);
 	const [selectedMetadata, setSelectedMetadata] = useState<any>(null);
 	const [actionLoading, setActionLoading] = useState(false);
+	const [searchQuery, setSearchQuery] = useState('');
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 
 	// Fetch Function
 	const fetchDetail = useCallback(async () => {
@@ -496,6 +502,33 @@ const LicenseDetailPage = () => {
 
 	const hwidData = parseJson(license.hwid);
 	const configData = parseJson(license.config);
+
+	// Filter and paginate logs
+	const filteredLogs = (license?.logs || []).filter((log) => {
+		if (!searchQuery) return true;
+		const query = searchQuery.toLowerCase();
+		return (
+			log.level.toLowerCase().includes(query) ||
+			log.message.toLowerCase().includes(query) ||
+			log.metadata?.toLowerCase().includes(query)
+		);
+	});
+
+	const paginatedLogs = filteredLogs.slice(
+		page * rowsPerPage,
+		page * rowsPerPage + rowsPerPage,
+	);
+
+	const handleChangePage = (_event: unknown, newPage: number) => {
+		setPage(newPage);
+	};
+
+	const handleChangeRowsPerPage = (
+		event: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
 
 	return (
 		<Grid container spacing={6}>
@@ -724,13 +757,34 @@ const LicenseDetailPage = () => {
 				<Card>
 					<CardHeader
 						title="Telemetry Logs"
-						subheader="Latest 50 events from bot instance"
+						subheader={`${filteredLogs.length} of ${license?.logs?.length || 0} events`}
 						avatar={
 							<div className="p-2 bg-error/10 rounded">
 								<i className="tabler-activity-heartbeat text-error" />
 							</div>
 						}
 					/>
+					<Divider />
+					<CardContent className="pb-0">
+						<TextField
+							fullWidth
+							size="small"
+							placeholder="Search logs by level, message or metadata..."
+							value={searchQuery}
+							onChange={(e) => {
+								setSearchQuery(e.target.value);
+								setPage(0);
+							}}
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position="start">
+										<i className="tabler-search" />
+									</InputAdornment>
+								),
+							}}
+							className="mb-4"
+						/>
+					</CardContent>
 					<TableContainer className="max-h-[500px]">
 						<Table stickyHeader size="small">
 							<TableHead>
@@ -745,54 +799,82 @@ const LicenseDetailPage = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{license?.logs?.map((log: TelemetryLog) => (
-									<TableRow key={log.id} hover>
-										<TableCell>
-											<Chip
-												label={log.level.toUpperCase()}
-												size="small"
-												color={
-													log.level === 'error'
-														? 'error'
-														: log.level === 'warn'
-															? 'warning'
-															: 'info'
-												}
-												variant="tonal"
-												className="h-6 text-[10px] font-bold"
-											/>
-										</TableCell>
-										<TableCell className="text-sm font-medium">
-											{log.message}
-										</TableCell>
-
-										<TableCell>
-											{log.metadata ? (
-												<Button
-													variant="outlined"
-													size="small"
-													color="secondary"
-													onClick={() => handleViewMetadata(log.metadata)}
-													startIcon={<i className="tabler-code" />}
-													className="py-1 px-2 min-w-0 h-7 text-[10px]"
-												>
-													View JSON
-												</Button>
-											) : (
-												<span className="text-textSecondary text-xs opacity-50">
-													-
-												</span>
-											)}
-										</TableCell>
-
-										<TableCell className="text-xs text-textSecondary whitespace-nowrap">
-											{new Date(log.createdAt).toLocaleString()}
+								{paginatedLogs.length === 0 ? (
+									<TableRow>
+										<TableCell
+											colSpan={4}
+											className="text-center text-textSecondary py-8"
+										>
+											<div className="flex flex-col items-center gap-2">
+												<i className="tabler-database-off text-4xl opacity-50" />
+												<Typography variant="body2" color="textSecondary">
+													{searchQuery
+														? 'No logs match your search'
+														: 'No telemetry logs available'}
+												</Typography>
+											</div>
 										</TableCell>
 									</TableRow>
-								))}
+								) : (
+									paginatedLogs.map((log: TelemetryLog) => (
+										<TableRow key={log.id} hover>
+											<TableCell>
+												<Chip
+													label={log.level.toUpperCase()}
+													size="small"
+													color={
+														log.level === 'error'
+															? 'error'
+															: log.level === 'warn'
+																? 'warning'
+																: 'info'
+													}
+													variant="tonal"
+													className="h-6 text-[10px] font-bold"
+												/>
+											</TableCell>
+											<TableCell className="text-sm font-medium">
+												{log.message}
+											</TableCell>
+
+											<TableCell>
+												{log.metadata ? (
+													<Button
+														variant="outlined"
+														size="small"
+														color="secondary"
+														onClick={() => handleViewMetadata(log.metadata)}
+														startIcon={<i className="tabler-code" />}
+														className="py-1 px-2 min-w-0 h-7 text-[10px]"
+													>
+														View JSON
+													</Button>
+												) : (
+													<span className="text-textSecondary text-xs opacity-50">
+														-
+													</span>
+												)}
+											</TableCell>
+
+											<TableCell className="text-xs text-textSecondary whitespace-nowrap">
+												{new Date(log.createdAt).toLocaleString()}
+											</TableCell>
+										</TableRow>
+									))
+								)}
 							</TableBody>
 						</Table>
 					</TableContainer>
+					<Divider />
+					<TablePagination
+						rowsPerPageOptions={[5, 10, 25, 50]}
+						component="div"
+						count={filteredLogs.length}
+						rowsPerPage={rowsPerPage}
+						page={page}
+						onPageChange={handleChangePage}
+						onRowsPerPageChange={handleChangeRowsPerPage}
+					/>
 				</Card>
 			</Grid>
 

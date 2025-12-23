@@ -25,6 +25,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import InputAdornment from '@mui/material/InputAdornment';
+import TableContainer from '@mui/material/TableContainer';
+import TablePagination from '@mui/material/TablePagination';
+import CardContent from '@mui/material/CardContent';
+import Divider from '@mui/material/Divider';
 
 // Third-party Imports
 import { toast } from 'react-toastify';
@@ -49,6 +54,9 @@ const LicenseListPage = () => {
 		null,
 	);
 	const [actionLoading, setActionLoading] = useState(false);
+	const [searchQuery, setSearchQuery] = useState('');
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 
 	// Ambil lang dari params kalau butuh construct URL manual, tapi Link otomatis handle biasanya
 	const params = useParams();
@@ -164,11 +172,39 @@ const LicenseListPage = () => {
 		toast.success('Copied!');
 	};
 
+	// Filter and paginate licenses
+	const filteredLicenses = licenses.filter((license) => {
+		if (!searchQuery) return true;
+		const query = searchQuery.toLowerCase();
+		return (
+			license.key.toLowerCase().includes(query) ||
+			license.ownerId.toLowerCase().includes(query) ||
+			(license.isActive ? 'active' : 'suspended').includes(query)
+		);
+	});
+
+	const paginatedLicenses = filteredLicenses.slice(
+		page * rowsPerPage,
+		page * rowsPerPage + rowsPerPage,
+	);
+
+	const handleChangePage = (_event: unknown, newPage: number) => {
+		setPage(newPage);
+	};
+
+	const handleChangeRowsPerPage = (
+		event: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
+
 	return (
 		<>
 			<Card>
 				<CardHeader
 					title="License Manager"
+					subheader={`${filteredLicenses.length} of ${licenses.length} licenses`}
 					action={
 						<Button
 							variant="contained"
@@ -179,7 +215,28 @@ const LicenseListPage = () => {
 						</Button>
 					}
 				/>
-				<div className="overflow-x-auto">
+				<Divider />
+				<CardContent className="pb-0">
+					<TextField
+						fullWidth
+						size="small"
+						placeholder="Search by license key, owner ID or status..."
+						value={searchQuery}
+						onChange={(e) => {
+							setSearchQuery(e.target.value);
+							setPage(0);
+						}}
+						InputProps={{
+							startAdornment: (
+								<InputAdornment position="start">
+									<i className="tabler-search" />
+								</InputAdornment>
+							),
+						}}
+						className="mb-4"
+					/>
+				</CardContent>
+				<TableContainer>
 					<Table>
 						<TableHead>
 							<TableRow>
@@ -203,8 +260,19 @@ const LicenseListPage = () => {
 										No licenses found
 									</TableCell>
 								</TableRow>
+							) : paginatedLicenses.length === 0 ? (
+								<TableRow>
+									<TableCell colSpan={5} align="center" className="py-8">
+										<div className="flex flex-col items-center gap-2">
+											<i className="tabler-search-off text-4xl opacity-50" />
+											<Typography variant="body2" color="textSecondary">
+												No licenses match your search
+											</Typography>
+										</div>
+									</TableCell>
+								</TableRow>
 							) : (
-								licenses.map((license) => (
+								paginatedLicenses.map((license) => (
 									<TableRow key={license.id}>
 										<TableCell>
 											<div className="flex items-center gap-2">
@@ -284,7 +352,17 @@ const LicenseListPage = () => {
 							)}
 						</TableBody>
 					</Table>
-				</div>
+				</TableContainer>
+				<Divider />
+				<TablePagination
+					rowsPerPageOptions={[5, 10, 25, 50]}
+					component="div"
+					count={filteredLicenses.length}
+					rowsPerPage={rowsPerPage}
+					page={page}
+					onPageChange={handleChangePage}
+					onRowsPerPageChange={handleChangeRowsPerPage}
+				/>
 			</Card>
 
 			{/* Generate Dialog tetep disini */}

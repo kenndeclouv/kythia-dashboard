@@ -1,5 +1,5 @@
 // Next Imports
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 // MUI Imports
 import { useTheme } from '@mui/material/styles';
@@ -60,7 +60,12 @@ const VerticalMenu = ({ scrollMenu, guilds, userId }: Props) => {
 	const theme = useTheme();
 	const verticalNavOptions = useVerticalNav();
 	const params = useParams();
-	const { id: guildId } = params;
+	const pathname = usePathname();
+
+	// Only treat 'id' as guildId if we're NOT on an admin route
+	const isAdminRoute = pathname?.includes('/dash/admin/');
+	const { id } = params;
+	const guildId = isAdminRoute ? null : id;
 
 	// Vars
 	const { isBreakpointReached, transitionDuration } = verticalNavOptions;
